@@ -16,6 +16,7 @@ public class HabrCareerParse {
     public static void main(String[] args) throws IOException {
         for (int i = 0; i < 6; i++) {
             Connection connection = Jsoup.connect(PAGE_LINK + "?page=" + i);
+            HabrCareerParse hcp = new HabrCareerParse();
             Document document = connection.get();
             Elements rows = document.select(".vacancy-card__inner");
             rows.forEach(row -> {
@@ -26,8 +27,22 @@ public class HabrCareerParse {
                 Element linkElement = titleElement.child(0);
                 String vacancyName = titleElement.text();
                 String link = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
-                System.out.printf("%s - %s - %s%n", time, vacancyName, link);
+                String desc = hcp.retrieveDescription(link);
+                System.out.printf("%s -  %s%n%s%n%s%n%n", time, vacancyName, desc, link);
             });
         }
+    }
+
+    private String retrieveDescription(String link) {
+        String result = null;
+        try {
+            Connection connection = Jsoup.connect(link);
+            Document document = connection.get();
+            Element descElement = document.selectFirst(".style-ugc");
+            result = descElement.text();
+        } catch (IOException ie) {
+            ie.printStackTrace();
+        }
+        return result;
     }
 }
