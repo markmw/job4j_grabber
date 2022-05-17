@@ -17,7 +17,7 @@ public class Grabber implements Grab {
     private final Properties cfg = new Properties();
     private final static String LINK = "https://career.habr.com/vacancies/java_developer";
 
-    public Store store() throws SQLException {
+    public Store store() throws SQLException, ClassNotFoundException {
         return new PsqlStore(cfg);
     }
 
