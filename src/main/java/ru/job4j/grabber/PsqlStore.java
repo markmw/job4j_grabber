@@ -25,12 +25,14 @@ public class PsqlStore implements Store, AutoCloseable {
     @Override
     public void save(Post post) {
         try (PreparedStatement ps = connection.prepareStatement(
-                "insert into post(name, text, link, created) values(?, ?, ?, ?);",
+                "INSERT INTO post (title, description, link, created) "
+                + "VALUES (?, ?, ?, ?);",
                 Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, post.getTitle());
             ps.setString(2, post.getDescription());
             ps.setString(3, post.getLink());
             ps.setTimestamp(4, Timestamp.valueOf(post.getCreated()));
+            ps.execute();
             try (ResultSet genKeys =  ps.getGeneratedKeys()) {
                 if (genKeys.next()) {
                     post.setId(genKeys.getInt(1));
@@ -44,7 +46,7 @@ public class PsqlStore implements Store, AutoCloseable {
     @Override
     public List<Post> getAll() {
         List<Post> list = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement("select * from post;")) {
+        try (PreparedStatement ps = connection.prepareStatement("select * from post")) {
             try (ResultSet rs =  ps.executeQuery()) {
                 while (rs.next()) {
                     list.add(getPost(rs));
@@ -81,8 +83,8 @@ public class PsqlStore implements Store, AutoCloseable {
 
     private Post getPost(ResultSet rs) throws SQLException {
         return new Post(rs.getInt("id"),
-                rs.getString("name"),
-                rs.getString("text"),
+                rs.getString("title"),
+                rs.getString("description"),
                 rs.getString("link"),
                 rs.getTimestamp("created").toLocalDateTime());
     }
@@ -98,13 +100,13 @@ public class PsqlStore implements Store, AutoCloseable {
             LocalDateTime ldt = LocalDateTime.now();
             Post post = new Post(
                     "Java разработчик",
-                    "java",
                     "https://career.habr.com/vacancies/1000092387",
+                    "java",
                     ldt);
             Post post1 = new Post(
                     "Java программист",
-                    "java",
                     "https://career.habr.com/vacancies/1000100675",
+                    "java",
                     ldt);
             query.save(post);
             query.save(post1);

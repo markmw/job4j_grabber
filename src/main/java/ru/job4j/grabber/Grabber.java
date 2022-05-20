@@ -7,6 +7,7 @@ import ru.job4j.grabber.utils.HarbCareerDateTimeParser;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.Charset;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
@@ -19,7 +20,7 @@ public class Grabber implements Grab {
     private final Properties cfg = new Properties();
     private final static String LINK = "https://career.habr.com/vacancies/java_developer";
 
-    public Store store() throws SQLException, ClassNotFoundException {
+    public Store store() throws SQLException {
         return new PsqlStore(cfg);
     }
 
@@ -55,7 +56,7 @@ public class Grabber implements Grab {
 
     public static class GrabJob implements Job {
         @Override
-        public void execute(JobExecutionContext context) {
+        public void execute(JobExecutionContext context) throws JobExecutionException {
             JobDataMap map = context.getJobDetail().getJobDataMap();
             Store store = (Store) map.get("store");
             Parse parse = (Parse) map.get("parse");
@@ -74,7 +75,7 @@ public class Grabber implements Grab {
                     try (OutputStream out = socket.getOutputStream()) {
                         out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                         for (Post post : store.getAll()) {
-                            out.write(post.toString().getBytes());
+                            out.write(post.toString().getBytes(Charset.forName("Windows-1251")));
                             out.write(System.lineSeparator().getBytes());
                         }
                     } catch (IOException io) {
