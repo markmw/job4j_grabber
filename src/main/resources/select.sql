@@ -12,6 +12,6 @@ having count(person.company_id) in (
 	select COUNT(company_id)
 	from person
 	group by company_id
-	order by company_id ASC
+	order by company_id DESC
 	LIMIT 1);
 
