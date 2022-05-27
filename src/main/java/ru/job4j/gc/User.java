@@ -29,4 +29,9 @@ public class User {
     protected void finalize() throws Throwable {
         System.out.printf("Removed %d %s%n", age, name);
     }
+
+    public static void main(String[] args) {
+        User user = new User(1, "Name");
+        User user1 = new User(2, "namE");
+    }
 }
