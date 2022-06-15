@@ -31,7 +31,10 @@ public class User {
     }
 
     public static void main(String[] args) {
-        User user = new User(1, "Name");
-        User user1 = new User(2, "namE");
+        GCDemo.info();
+        for (int i = 0; i < 7800; i++) {
+            new User(100, "Ivan100" + i);
+        }
+        GCDemo.info();
     }
 }
