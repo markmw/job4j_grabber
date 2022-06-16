@@ -38,12 +38,12 @@ public class Emulator {
             if (answer == 1) {
                 Stream.of(Paths.get(dir).toFile().listFiles())
                         .filter(e -> e.getName().endsWith(".txt"))
-                        .map(e -> e.getName()).forEach(dirFileCache::load);
+                        .map(e -> e.getName()).forEach(dirFileCache::get);
             } else if (answer == 2) {
                 System.out.println("Укажите имя файла:");
                 String name = answer(scanner);
                 check(dir, name);
-                dirFileCache.put(name, dirFileCache.load(name));
+                dirFileCache.put(name, dirFileCache.get(name));
             } else if (answer == 3) {
                 System.out.println("Укажите имя файла:");
                 String name = answer(scanner);
