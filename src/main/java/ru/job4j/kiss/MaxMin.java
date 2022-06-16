@@ -16,7 +16,7 @@ public class MaxMin {
     }
 
     public static <T> T compare(List<T> value, BiPredicate<T, T> bp) {
-        T rsl = value.get(0);
+        T rsl = value.isEmpty() ? null : value.get(0);
         for (T el : value) {
             if (bp.test(el, rsl)) {
                 rsl = el;

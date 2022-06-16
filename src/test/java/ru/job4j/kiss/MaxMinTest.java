@@ -33,4 +33,10 @@ public class MaxMinTest {
         assertThat(maxMin.min(list, comparator), is(0));
     }
 
+    @Test
+    public void whenListIsNull() {
+        MaxMin maxMin = new MaxMin();
+        List<String> list = List.of();
+        assertNull(maxMin.max(list, Comparator.naturalOrder()));
+    }
 }
