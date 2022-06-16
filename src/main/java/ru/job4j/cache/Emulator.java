@@ -1,34 +1,54 @@
 package ru.job4j.cache;
 
-import java.io.File;
 import java.nio.file.Paths;
+import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class Emulator {
-    public static DirFileCache emulateCache(String cachingDir) {
-        File file = Paths.get(cachingDir).toFile();
-        if (!file.exists()) {
-            throw new IllegalArgumentException(String.format("Not exist %s", file.getAbsoluteFile()));
-        }
-        if (!file.isDirectory()) {
-            throw new IllegalArgumentException(String.format("Not directory %s", file.getAbsolutePath()));
-        }
-        return new DirFileCache(cachingDir);
+    private static String answer(Scanner scanner) {
+        return scanner.nextLine();
     }
 
-    public static void putCache(DirFileCache dirFileCache, String key, String value) {
-        dirFileCache.put(key, value);
+    private static void check(String dir) {
+        if (!Paths.get(dir).toFile().exists()) {
+            throw new IllegalArgumentException(String.format("No such file: %s", dir));
+        }
     }
 
-    public static String loadCache(DirFileCache dirFileCache, String key) {
-        return dirFileCache.get(key);
+    private static void check(String dir, String name) {
+        if (!Paths.get(dir).toFile().exists()) {
+            throw new IllegalArgumentException(String.format("No such file: %s in this directory", name, dir));
+        }
     }
 
     public static void main(String[] args) {
-        DirFileCache dirFileCache = emulateCache(
-                "/Users/adletbaitorynov/Downloads/Java_projects/job4j_grabber/src/main/resources");
-        putCache(dirFileCache, "key", "value");
-        System.out.println(loadCache(dirFileCache, "Names.txt"));
-        System.out.println(loadCache(dirFileCache, "key"));
-        System.out.println(loadCache(dirFileCache, "not_exist"));
+        System.out.println("Укажите директорию:");
+        Scanner scanner = new Scanner(System.in);
+        String dir = answer(scanner);
+        check(dir);
+        DirFileCache dirFileCache = new DirFileCache(dir);
+        int answer = 0;
+        while (answer != 4) {
+            System.out.println("Выберите тип операции\n"
+            + "1 -> Загрузка всех текстовых файлов из указанной директории\n"
+            + "2 -> Загрузка текстового файла\n"
+            + "3 -> Чтение содержимого файла из кэша\n"
+            + "4 -> Выход");
+            answer = Integer.parseInt(answer(scanner));
+            if (answer == 1) {
+                Stream.of(Paths.get(dir).toFile().listFiles())
+                        .filter(e -> e.getName().endsWith(".txt"))
+                        .map(e -> e.getName()).forEach(dirFileCache::load);
+            } else if (answer == 2) {
+                System.out.println("Укажите имя файла:");
+                String name = answer(scanner);
+                check(dir, name);
+                dirFileCache.put(name, dirFileCache.load(name));
+            } else if (answer == 3) {
+                System.out.println("Укажите имя файла:");
+                String name = answer(scanner);
+                System.out.println(dirFileCache.get(name));
+            }
+        }
     }
 }
