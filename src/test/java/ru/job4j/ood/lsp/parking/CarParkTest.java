@@ -1,13 +1,11 @@
 package ru.job4j.ood.lsp.parking;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class CarParkTest {
     @Test
-    @Ignore
     public void whenParkedTwoAutoCarsAndTwoBeachWagon() {
         Parking parking = new CarPark(2, 1);
         Car autoCar = new AutoCar();
@@ -21,7 +19,6 @@ public class CarParkTest {
     }
 
     @Test
-    @Ignore
     public void whenParkedTwoWagonsAndOneAutoCar() {
         Parking parking = new CarPark(4, 0);
         Car wagon = new BeachWagon(2);
@@ -33,7 +30,6 @@ public class CarParkTest {
     }
 
     @Test
-    @Ignore
     public void whenNotParkingSpace() {
         Parking parking = new CarPark(0, 0);
         Car autoCar = new AutoCar();
@@ -43,7 +39,6 @@ public class CarParkTest {
     }
 
     @Test
-    @Ignore
     public void whenNotSpaceIsAutoCar() {
         Parking parking = new CarPark(0, 2);
         Car autoCar = new AutoCar();

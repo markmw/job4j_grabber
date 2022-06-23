@@ -16,11 +16,26 @@ public class CarPark implements Parking {
 
     @Override
     public boolean isFree(Car car) {
-        return false;
+        boolean result = false;
+        if (car.getSize() == AutoCar.CARSPACE && carSpace >= AutoCar.CARSPACE) {
+            result = true;
+            carSpace--;
+        } else if (car.getSize() > AutoCar.CARSPACE && wagonSpace >= AutoCar.CARSPACE) {
+            result = true;
+            wagonSpace--;
+        } else if (car.getSize() > AutoCar.CARSPACE && carSpace >= car.getSize()) {
+            result = true;
+            carSpace -= car.getSize();
+        }
+        return result;
     }
 
     @Override
     public boolean isParked(Car car) {
-        return false;
+        boolean result = isFree(car);
+        if (result) {
+            storage.add(car);
+        }
+        return result;
     }
 }
