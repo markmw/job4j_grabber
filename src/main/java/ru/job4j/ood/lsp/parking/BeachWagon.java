@@ -4,9 +4,10 @@ public class BeachWagon implements Car {
     private int size;
 
     public BeachWagon(int size) {
-        if (size < 2) {
+        if (size <= AutoCar.CARSPACE) {
             throw new IllegalArgumentException("Is not a Wagon!");
         }
+        this.size = size;
     }
 
     @Override

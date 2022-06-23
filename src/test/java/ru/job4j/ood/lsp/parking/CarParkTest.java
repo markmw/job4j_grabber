@@ -41,4 +41,12 @@ public class CarParkTest {
         assertFalse(parking.isParked(autoCar));
         assertFalse(parking.isParked(wagon));
     }
+
+    @Test
+    @Ignore
+    public void whenNotSpaceIsAutoCar() {
+        Parking parking = new CarPark(0, 2);
+        Car autoCar = new AutoCar();
+        assertFalse(parking.isParked(autoCar));
+    }
 }
