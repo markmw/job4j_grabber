@@ -12,8 +12,8 @@ public class CarParkTest {
         Parking parking = new CarPark(2, 1);
         Car autoCar = new AutoCar();
         Car autoCar2 = new AutoCar();
-        Car wagon = new BeachWagon();
-        Car wagon2 = new BeachWagon();
+        Car wagon = new BeachWagon(2);
+        Car wagon2 = new BeachWagon(2);
         assertTrue(parking.isParked(autoCar));
         assertTrue(parking.isParked(autoCar2));
         assertTrue(parking.isParked(wagon));
@@ -24,8 +24,8 @@ public class CarParkTest {
     @Ignore
     public void whenParkedTwoWagonsAndOneAutoCar() {
         Parking parking = new CarPark(4, 0);
-        Car wagon = new BeachWagon();
-        Car wagon2 = new BeachWagon();
+        Car wagon = new BeachWagon(2);
+        Car wagon2 = new BeachWagon(2);
         Car autoCar = new AutoCar();
         assertTrue(parking.isParked(wagon));
         assertTrue(parking.isParked(wagon2));
@@ -37,7 +37,7 @@ public class CarParkTest {
     public void whenNotParkingSpace() {
         Parking parking = new CarPark(0, 0);
         Car autoCar = new AutoCar();
-        Car wagon = new AutoCar();
+        Car wagon = new BeachWagon(2);
         assertFalse(parking.isParked(autoCar));
         assertFalse(parking.isParked(wagon));
     }
