@@ -26,4 +26,9 @@ public class Warehouse implements Store {
     public boolean filter(Food food) {
         return predicate.test(food);
     }
+
+    @Override
+    public void clear() {
+        foods.clear();
+    }
 }

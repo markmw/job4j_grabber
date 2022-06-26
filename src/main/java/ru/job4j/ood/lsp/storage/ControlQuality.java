@@ -1,6 +1,7 @@
 package ru.job4j.ood.lsp.storage;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ControlQuality {
     private final List<Store> storages;
@@ -16,5 +17,13 @@ public class ControlQuality {
                 break;
             }
         }
+    }
+
+    public void resort() {
+        List<Food> foods = storages.stream()
+                .flatMap(t -> t.getFoods().stream())
+                .collect(Collectors.toList());
+        storages.forEach(Store::clear);
+        foods.forEach(this::distribute);
     }
 }

@@ -66,4 +66,25 @@ public class ControlQualityTest {
         assertEquals(shop.getFoods().get(1).getPrice(), 315, 0.001);
         assertEquals(trash.getFoods(), List.of(eggs));
     }
+
+    @Test
+    public void whenResortFoods() {
+        Food milk = new Food("milk", now.minusDays(2), now.plusDays(10), 92, 30);
+        Food bread = new Food("bread", now.minusDays(3), now.plusDays(3), 50, 30);
+        Food meat = new Food("meat", now.minusDays(7), now.plusDays(2), 450, 30);
+        Food eggs = new Food("eggs", now.minusDays(20), now, 120, 30);
+        controlQuality.distribute(milk);
+        controlQuality.distribute(bread);
+        controlQuality.distribute(meat);
+        controlQuality.distribute(eggs);
+        assertEquals(warehouse.getFoods(), List.of(milk));
+        assertEquals(shop.getFoods(), List.of(bread, meat));
+        assertEquals(shop.getFoods().get(1).getPrice(), 315, 0.001);
+        assertEquals(trash.getFoods(), List.of(eggs));
+        milk.setExpireDate(now.plusDays(3));
+        bread.setExpireDate(now);
+        controlQuality.resort();
+        assertEquals(shop.getFoods(), List.of(milk, meat));
+        assertEquals(trash.getFoods(), List.of(bread, eggs));
+    }
 }

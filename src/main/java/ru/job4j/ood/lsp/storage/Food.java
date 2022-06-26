@@ -33,6 +33,10 @@ public class Food {
         return expireDate;
     }
 
+    public void setExpireDate(LocalDateTime expireDate) {
+        this.expireDate = expireDate;
+    }
+
     public double getPrice() {
         return price;
     }
@@ -55,4 +59,6 @@ public class Food {
                 + ", discount=" + discount
                 + '}';
     }
+
+
 }
