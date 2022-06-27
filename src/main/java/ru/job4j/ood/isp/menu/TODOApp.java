@@ -4,11 +4,11 @@ import java.util.Scanner;
 
 public class TODOApp {
     public static final ActionDelegate STUB_ACTION = System.out::println;
-    private static final String MENU_ITEMS =
-            "==============MENU==============" + System.lineSeparator()
-            + "1. Add new list" + System.lineSeparator()
-            + "2. Show all list" + System.lineSeparator()
-            + "3. Exit";
+    private static final String MENU_ITEMS = """
+            1. Add new list
+            2. Show all list
+            3. Exit
+            """;
     private static final int ADD_ACTION = 1;
     private static final int VIEW_ACTION = 2;
     private static final int EXIT_ACTION = 3;
