@@ -7,8 +7,7 @@ public class TODOApp {
     private static final String MENU_ITEMS = """
             1. Add new list
             2. Show all list
-            3. Exit
-            """;
+            3. Exit""";
     private static final int ADD_ACTION = 1;
     private static final int VIEW_ACTION = 2;
     private static final int EXIT_ACTION = 3;
